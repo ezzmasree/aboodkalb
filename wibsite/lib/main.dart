@@ -10,14 +10,20 @@ import 'package:wibsite/sign_inmoblie/signin_moblie.dart';
 
 import 'package:wibsite/sign_up_moblie/sign_upmoblie.dart';
 //import 'package:wibsite/db/mongo.dart';
+import 'package:provider/provider.dart';
 
-import 'home_page/myHome.dart';
+import 'home_page/food_page/meals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => MealProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

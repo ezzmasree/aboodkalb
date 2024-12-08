@@ -1,15 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wibsite/chat/display_couch.dart';
 import 'package:wibsite/home_page/account_page/account.dart';
 import 'package:wibsite/home_page/ai_chat/interface.dart';
+import 'package:wibsite/home_page/food_page/meals.dart';
 import 'package:wibsite/home_page/myHome.dart';
 import 'package:wibsite/home_page/setting_page/setting.dart';
 import 'package:wibsite/home_page/workout.dart/workouticon.dart';
@@ -264,7 +263,7 @@ class _MainPageState extends State<MainPage> {
     if (_currentIndex == 0) {
       return MyHome();
     } else if (_currentIndex == 1) {
-      return ServicePage();
+      return MealPage();
     } else if (_currentIndex == 2) {
       return workout();
     } else if (_currentIndex == 3) {
@@ -288,16 +287,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MealPage extends StatelessWidget {
-  const MealPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Welcome to the Meal Page!'),
-    );
-  }
-}
 
 class ServicePage extends StatelessWidget {
   const ServicePage({super.key});

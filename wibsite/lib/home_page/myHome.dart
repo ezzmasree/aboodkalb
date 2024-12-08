@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:wibsite/saving_data/save_data.dart';
+import 'package:provider/provider.dart';
+
+import 'food_page/FoodForToday.dart';
+import 'food_page/meals.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -10,27 +13,37 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       // appBar: AppBar(
       //   backgroundColor: Colors.transparent,
       //   elevation: 0,
       // ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               // Header(),
-              SizedBox(height: 20),
-              StepsCard(),
-              SizedBox(height: 20),
-              DailyActivityCard(),
-              SizedBox(height: 20),
-              WorkoutsCard(),
-              SizedBox(height: 20),
-              FoodTrackerCard(),
+              const SizedBox(height: 20),
+              const StepsCard(),
+              const SizedBox(height: 20),
+              const DailyActivityCard(),
+              const SizedBox(height: 20),
+              const WorkoutsCard(),
+              const SizedBox(height: 20),
+              // Use Consumer to listen to changes in MealProvider for totalCalories
+              Consumer<MealProvider>(
+                builder: (context, mealProvider, child) {
+                  return FoodTrackerCard(
+                    consumedCalories: mealProvider.totalCalories,
+                    totalCalories:
+                        2000, // You can change this based on user goals
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -283,7 +296,14 @@ class WorkoutItem extends StatelessWidget {
 }
 
 class FoodTrackerCard extends StatelessWidget {
-  const FoodTrackerCard({super.key});
+  final int consumedCalories;
+  final int totalCalories;
+
+  const FoodTrackerCard({
+    super.key,
+    required this.consumedCalories,
+    required this.totalCalories,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -296,40 +316,69 @@ class FoodTrackerCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Food',
-              style: TextStyle(color: Colors.white, fontSize: 18)),
+          const Text(
+            'Food',
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('243 / 1 858 Cal',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold)),
+              Text(
+                '$consumedCalories / $totalCalories Cal',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FoodForToday()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color(0xFFd5ff5f), // Changed to the new color
+                  backgroundColor: const Color(0xFFd5ff5f),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child:
-                    const Text('Record', style: TextStyle(color: Colors.black)),
+                child: const Text(
+                  'Record',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          const Text('Meal Tips',
-              style: TextStyle(color: Colors.white, fontSize: 18)),
+          const Text(
+            'Meal Tips',
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
           const SizedBox(height: 10),
           const MealTips(),
           const SizedBox(height: 10),
-          const Text('See All',
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const MealPage()), // Change MealsPage to your target page
+              );
+            },
+            child: const Text(
+              'See All',
               style: TextStyle(
-                  color: Color(0xFFd5ff5f))), // Changed to the new color
+                color: Color(0xFFD5FF5F), // Bright color for the "See All" text
+                fontSize: 16, // Customize the font size
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -345,18 +394,16 @@ class MealTips extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         MealTip(
-          imageUrl:
-              'https://storage.googleapis.com/a1aa/image/gnvoA41CfkUAbakxw34i8cgI5Y97vnHmf5TYVYr4COAZ6toTA.jpg',
-          title: 'Roasted Shrimp Kale Salad with Grapefruit...',
-          time: '30 min',
-          calories: '626 Cal',
+          imagePath: "assets/meals/grilled_chicken.jpg",
+          title: 'Grilled Chicken Wrap',
+          time: '25 min',
+          calories: '350 Cal',
         ),
         MealTip(
-          imageUrl:
-              'https://storage.googleapis.com/a1aa/image/ZdquE3zzDSqNL1FK44NQSkCnbKixBJG2fzTZA75wpZbN9W0JA.jpg',
-          title: 'Homemade Huevos Rancheros',
-          time: '40 min',
-          calories: '481 Cal',
+          imagePath: "assets/meals/quinoa_salad.jpg",
+          title: "Quinoa Salad with Avocado",
+          time: '20 min',
+          calories: '400 Cal',
         ),
       ],
     );
@@ -364,14 +411,14 @@ class MealTips extends StatelessWidget {
 }
 
 class MealTip extends StatelessWidget {
-  final String imageUrl;
+  final String imagePath;
   final String title;
   final String time;
   final String calories;
 
   const MealTip(
       {super.key,
-      required this.imageUrl,
+      required this.imagePath,
       required this.title,
       required this.time,
       required this.calories});
@@ -385,7 +432,7 @@ class MealTip extends StatelessWidget {
         color: const Color(0xFF3a3a3c),
         borderRadius: BorderRadius.circular(35),
         image: DecorationImage(
-          image: NetworkImage(imageUrl),
+          image: AssetImage(imagePath), // Use AssetImage for local assets
           fit: BoxFit.cover,
         ),
       ),
