@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wibsite/home_page/food_page/chatai_withfood.dart';
 
 // Meal model definition
 class Meal {
@@ -243,12 +244,57 @@ class MealPage extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: Column(
           children: [
-            MealGrid(meals: categorizedMealss["Breakfast"]!),
-            MealGrid(meals: categorizedMealss["Brunch"]!),
-            MealGrid(meals: categorizedMealss["Lunch"]!),
-            MealGrid(meals: categorizedMealss["Snacks"]!),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  MealGrid(meals: categorizedMealss["Breakfast"]!),
+                  MealGrid(meals: categorizedMealss["Brunch"]!),
+                  MealGrid(meals: categorizedMealss["Lunch"]!),
+                  MealGrid(meals: categorizedMealss["Snacks"]!),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0, right: 16.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: SizedBox(
+                  width: 100, // Small width for the button
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ChataiWithfood(), // Replace with your page
+                          )); // Replace with your chat page route
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFc4ff00), // Button color
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
+                      ),
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.chat_bubble, size: 16, color: Colors.black),
+                        SizedBox(width: 4),
+                        Text(
+                          'AI Chat',
+                          style: TextStyle(color: Colors.black, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -569,7 +615,8 @@ class MealDetailsPage extends StatelessWidget {
                     Meal(
                       imagePath: imagePath,
                       title: title,
-                      category:"", // You can update this dynamically based on the page or meal category
+                      category:
+                          "", // You can update this dynamically based on the page or meal category
                       calories: calories,
                       time: time,
                     ),
