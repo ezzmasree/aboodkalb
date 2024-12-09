@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class NotificationsPage extends StatefulWidget {
+  const NotificationsPage({super.key});
+
   @override
   _NotificationsPageState createState() => _NotificationsPageState();
 }
@@ -23,7 +24,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text('Notifications',
+        title: const Text('Notifications',
             style: TextStyle(
               color: Color.fromARGB(255, 255, 255, 255),
             )),
@@ -43,7 +44,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 color: ezz, // Text color
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListTile(
               leading: Icon(Icons.notifications, color: ezz),
               title: Text(
@@ -104,7 +105,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 color: ezz, // Text color
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListTile(
               leading: Icon(Icons.shopping_cart, color: ezz),
               title: Text(

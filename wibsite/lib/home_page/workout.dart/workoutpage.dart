@@ -5,6 +5,8 @@ import 'package:wibsite/home_page/workout.dart/vidioplayer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class WorkoutPage extends StatefulWidget {
+  const WorkoutPage({super.key});
+
   @override
   _WorkoutPageState createState() => _WorkoutPageState();
 }
@@ -82,14 +84,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
               color: headerColor,
               borderRadius: BorderRadius.circular(5),
             ),
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -100,9 +102,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
         GridView.builder(
           shrinkWrap:
               true, // To prevent overflow when multiple categories are displayed
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(8),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(8),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
@@ -133,7 +135,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                         YoutubePlayer(
                           controller: YoutubePlayerController(
                             initialVideoId: video['id']!,
-                            flags: YoutubePlayerFlags(
+                            flags: const YoutubePlayerFlags(
                               autoPlay: false,
                               mute: false,
                             ),
@@ -147,13 +149,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
                             children: [
                               Text(
                                 video['title']!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               // Text(
                               //   video['description']!,
                               //   style: TextStyle(color: Colors.white),
@@ -166,21 +168,21 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD5FF5F),
+                      backgroundColor: const Color(0xffD5FF5F),
                     ),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Success"),
-                            content: Text("You added the item to your list."),
+                            title: const Text("Success"),
+                            content: const Text("You added the item to your list."),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               ),
                             ],
                           );
@@ -188,10 +190,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       );
                       print(video['description']);
                     },
-                    child: Text(
+                    child: const Text(
                       'Add to My List',
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 0, 0, 0),
+                        color: Color.fromARGB(255, 0, 0, 0),
                       ),
                     ),
                   ),
@@ -207,7 +209,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 5, 6, 12),
+      backgroundColor: const Color.fromARGB(255, 5, 6, 12),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -217,7 +219,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               buildVideoSection("Shoulder", shoulderVideos, Colors.blue),
               buildVideoSection("Bicebs", handsVideos, Colors.green),
               buildVideoSection(
-                  "Trycibs", trysibs, Color.fromARGB(255, 0, 195, 146)),
+                  "Trycibs", trysibs, const Color.fromARGB(255, 0, 195, 146)),
               buildVideoSection("Back", backVideos, Colors.orange),
               buildVideoSection("Legs", legsVideos, Colors.purple),
             ],

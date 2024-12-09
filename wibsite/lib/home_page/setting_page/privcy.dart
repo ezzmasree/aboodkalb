@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PrivacyPage extends StatefulWidget {
+  const PrivacyPage({super.key});
+
   @override
   PrivacyPageState createState() => PrivacyPageState();
 }
@@ -21,13 +23,13 @@ class PrivacyPageState extends State<PrivacyPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Privacy Settings',
           style: TextStyle(
             color: Color.fromARGB(255, 253, 255, 248),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       ),
       body: Container(
         color: Colors.black, // Black background
@@ -35,7 +37,7 @@ class PrivacyPageState extends State<PrivacyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Privacy Options',
               style: TextStyle(
                 fontSize: 18,
@@ -43,11 +45,11 @@ class PrivacyPageState extends State<PrivacyPage> {
                 color: Colors.white, // Changed to white
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListTile(
-              leading: Icon(Icons.location_on,
+              leading: const Icon(Icons.location_on,
                   color: Colors.white), // Changed to white
-              title: Text(
+              title: const Text(
                 'Location Services',
                 style: TextStyle(color: Colors.white), // Changed to white
               ),
@@ -69,8 +71,8 @@ class PrivacyPageState extends State<PrivacyPage> {
             ),
             ListTile(
               leading:
-                  Icon(Icons.share, color: Colors.white), // Changed to white
-              title: Text(
+                  const Icon(Icons.share, color: Colors.white), // Changed to white
+              title: const Text(
                 'Data Sharing',
                 style: TextStyle(color: Colors.white), // Changed to white
               ),
@@ -91,9 +93,9 @@ class PrivacyPageState extends State<PrivacyPage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.ads_click,
+              leading: const Icon(Icons.ads_click,
                   color: Colors.white), // Changed to white
-              title: Text(
+              title: const Text(
                 'Personalized Ads',
                 style: TextStyle(color: Colors.white), // Changed to white
               ),
@@ -113,11 +115,11 @@ class PrivacyPageState extends State<PrivacyPage> {
                 },
               ),
             ),
-            Divider(color: Colors.white), // Changed to white
+            const Divider(color: Colors.white), // Changed to white
             ListTile(
               leading:
-                  Icon(Icons.delete, color: Colors.white), // Changed to white
-              title: Text(
+                  const Icon(Icons.delete, color: Colors.white), // Changed to white
+              title: const Text(
                 'Clear Browsing Data',
                 style: TextStyle(color: Colors.white), // Changed to white
               ),
@@ -126,7 +128,7 @@ class PrivacyPageState extends State<PrivacyPage> {
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.7)), // Changed to white
               ),
-              trailing: Icon(Icons.arrow_forward_ios,
+              trailing: const Icon(Icons.arrow_forward_ios,
                   color: Colors.white), // Changed to white
               onTap: () {
                 // Add logic for clearing browsing data
@@ -134,8 +136,8 @@ class PrivacyPageState extends State<PrivacyPage> {
             ),
             ListTile(
               leading:
-                  Icon(Icons.security, color: Colors.white), // Changed to white
-              title: Text(
+                  const Icon(Icons.security, color: Colors.white), // Changed to white
+              title: const Text(
                 'Manage Permissions',
                 style: TextStyle(color: Colors.white), // Changed to white
               ),
@@ -144,7 +146,7 @@ class PrivacyPageState extends State<PrivacyPage> {
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.7)), // Changed to white
               ),
-              trailing: Icon(Icons.arrow_forward_ios,
+              trailing: const Icon(Icons.arrow_forward_ios,
                   color: Colors.white), // Changed to white
               onTap: () {
                 // Add logic for managing app permissions

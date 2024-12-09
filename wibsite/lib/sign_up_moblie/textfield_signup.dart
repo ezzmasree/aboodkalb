@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:wibsite/sign_in/palet.dart';
 
 class textfiled_signupmoblie extends StatelessWidget {
   final String hint;
@@ -19,9 +17,9 @@ class textfiled_signupmoblie extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 350, maxHeight: 55),
       child: TextFormField(
-        obscureText: this.secrt,
+        obscureText: secrt,
         controller: controller,
-        style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+        style: const TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
         decoration: InputDecoration(
             prefixIcon: Icon(
               icon,
@@ -34,7 +32,7 @@ class textfiled_signupmoblie extends StatelessWidget {
             // ),
             hintText: hint,
             // labelStyle: TextStyle(color: Colors.white),
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
                 fontWeight: FontWeight.w100,
                 color: Color.fromARGB(255, 195, 204, 170)),
             contentPadding: const EdgeInsets.all(25),

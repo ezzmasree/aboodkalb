@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'food_page/FoodForToday.dart';
 import 'food_page/meals.dart';
+import 'package:wibsite/home_page/home.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -366,8 +367,10 @@ class FoodTrackerCard extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        const MealPage()), // Change MealsPage to your target page
+                  builder: (context) => const MainPage(
+                    initialIndex: 1, // Pass 1 to navigate to MealPage
+                  ),
+                ),
               );
             },
             child: const Text(
@@ -385,30 +388,92 @@ class FoodTrackerCard extends StatelessWidget {
   }
 }
 
+// class MealTips extends StatelessWidget {
+//   const MealTips({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         MealTip(
+//           imagePath: "assets/meals/grilled_chicken.jpg",
+//           title: 'Grilled Chicken Wrap',
+//           time: '25 min',
+//           calories: '350 Cal',
+//         ),
+//         MealTip(
+//           imagePath: "assets/meals/quinoa_salad.jpg",
+//           title: "Quinoa Salad with Avocado",
+//           time: '20 min',
+//           calories: '400 Cal',
+//         ),
+//       ],
+//     );
+//   }
+// }
+
 class MealTips extends StatelessWidget {
   const MealTips({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MealTip(
-          imagePath: "assets/meals/grilled_chicken.jpg",
-          title: 'Grilled Chicken Wrap',
-          time: '25 min',
-          calories: '350 Cal',
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MealDetailsPage(
+                  imagePath: "assets/meals/grilled_chicken.jpg",
+                  title: 'Grilled Chicken Wrap',
+                  time: '25 min',
+                  calories: '350 Cal',
+                  description: "A delicious wrap filled with grilled chicken, fresh lettuce, and tangy sauce.",
+                  ingredients: "Chicken Breast, Tortilla Wrap, Lettuce, Yogurt Sauce, Spices.",
+                  instructions: "1. Grill the chicken until cooked through and juicy.\n2. Lay out a tortilla wrap and place fresh lettuce on top.\n3. Slice the grilled chicken and place it on top of the lettuce.\n4. Drizzle with yogurt sauce and sprinkle with your favorite spices.\n5. Roll up the wrap and enjoy.",
+                ),
+              ),
+            );
+          },
+          child: const MealTip(
+            imagePath: "assets/meals/grilled_chicken.jpg",
+            title: 'Grilled Chicken Wrap',
+            time: '25 min',
+            calories: '350 Cal',
+          ),
         ),
-        MealTip(
-          imagePath: "assets/meals/quinoa_salad.jpg",
-          title: "Quinoa Salad with Avocado",
-          time: '20 min',
-          calories: '400 Cal',
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MealDetailsPage(
+                  imagePath: "assets/meals/quinoa_salad.jpg",
+                  title: "Quinoa Salad with Avocado",
+                  time: '20 min',
+                  calories: '400 Cal',
+                  description: "A protein-packed quinoa salad with fresh avocado, cherry tomatoes, and a lemon vinaigrette.",
+                  ingredients: "Quinoa, Avocado, Cherry Tomatoes, Lemon, Olive Oil, Salt, Pepper.",
+                  instructions:  "1. Cook the quinoa according to package instructions.\n2. Dice the avocado and cherry tomatoes.\n3. Toss the quinoa, avocado, and tomatoes together in a large bowl.\n4. Drizzle with lemon vinaigrette made from lemon juice, olive oil, salt, and pepper.\n5. Serve chilled or at room temperature.",
+                ),
+              ),
+            );
+          },
+          child: const MealTip(
+            imagePath: "assets/meals/quinoa_salad.jpg",
+            title: "Quinoa Salad with Avocado",
+            time: '20 min',
+            calories: '400 Cal',
+          ),
         ),
       ],
     );
   }
 }
+
 
 class MealTip extends StatelessWidget {
   final String imagePath;

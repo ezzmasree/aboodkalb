@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wibsite/home_page/home.dart';
 import 'package:wibsite/saving_data/save_data.dart';
 import 'package:wibsite/sign_inmoblie/auth.dart';
 import 'package:wibsite/sign_inmoblie/signin_moblie.dart';
-import 'package:wibsite/sign_up/textfield_signup.dart';
 import 'package:wibsite/sign_up_moblie/textfield_signup.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +24,7 @@ class SignUpmoblie extends StatelessWidget {
     final TextEditingController weightController = TextEditingController();
 
     Future<void> submitData() async {
-      final url =
+      const url =
           'http://192.168.1.100:3000/users'; // Replace with your actual backend URL
       final response = await http.post(
         Uri.parse(url),
@@ -69,7 +67,7 @@ class SignUpmoblie extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  Home_Page(), // Replace with your target page
+                  const Home_Page(), // Replace with your target page
             ),
           );
         } catch (e) {
@@ -77,12 +75,12 @@ class SignUpmoblie extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text("Error"),
+              title: const Text("Error"),
               content: Text(e.toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text("OK"),
+                  child: const Text("OK"),
                 ),
               ],
             ),
@@ -93,12 +91,12 @@ class SignUpmoblie extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Password Mismatch"),
-            content: Text("The passwords do not match. Please try again."),
+            title: const Text("Password Mismatch"),
+            content: const Text("The passwords do not match. Please try again."),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text("OK"),
+                child: const Text("OK"),
               ),
             ],
           ),
@@ -128,8 +126,8 @@ class SignUpmoblie extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Colors.black26,
                     blurRadius: 10,
                     offset: Offset(0, 2),
@@ -223,12 +221,12 @@ class SignUpmoblie extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => signin_mobilState()),
+                                builder: (context) => const signin_mobilState()),
                           );
                         },
                         child: const Text(
                           "Already have an account? Sign In",
-                          style: TextStyle(color: const Color(0xffD5FF5F)),
+                          style: TextStyle(color: Color(0xffD5FF5F)),
                         ),
                       ),
                       const Visibility(
@@ -250,6 +248,5 @@ class SignUpmoblie extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

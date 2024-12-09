@@ -16,6 +16,13 @@ class FoodForToday extends StatelessWidget {
           'Meals For Today',
           style: TextStyle(color: Colors.white),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,
+              color: Color(0xFFd5ff5f)), //  back arrow
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Consumer<MealProvider>(
         builder: (context, mealProvider, child) {

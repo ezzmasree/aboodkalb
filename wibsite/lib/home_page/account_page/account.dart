@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:wibsite/home_page/account_page/Edit.dart';
+import 'package:wibsite/sign_inmoblie/signin_moblie.dart';
 
 class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
+
   @override
   _AccountPageState createState() => _AccountPageState();
 }
@@ -47,18 +49,19 @@ class _AccountPageState extends State<AccountPage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xffD5FF5F)),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: Color.fromARGB(255, 0, 0, 0),
-        title: Text(
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Color(0xffD5FF5F)),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        title: const Text(
           'Account',
           style: TextStyle(color: Colors.white),
         ),
@@ -75,9 +78,9 @@ class _AccountPageState extends State<AccountPage> {
                 onTap: () {
                   searchById("ezz2002gmail.com");
                 },
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   radius: 50,
-                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  backgroundColor: Color.fromARGB(255, 0, 0, 0),
                   backgroundImage: AssetImage("assets/avatar.jpg"),
                   // child: Icon(
                   //   Icons.person,
@@ -86,16 +89,16 @@ class _AccountPageState extends State<AccountPage> {
                   // ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.person, color: Colors.white),
-                  SizedBox(width: 10),
+                  const Icon(Icons.person, color: Colors.white),
+                  const SizedBox(width: 10),
                   Text(
                     'Name: $name',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -103,102 +106,106 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.email, color: Colors.grey),
-                  SizedBox(width: 10),
+                  const Icon(Icons.email, color: Colors.grey),
+                  const SizedBox(width: 10),
                   Text(
                     'Email: $email',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.lock, color: Colors.grey),
-                  SizedBox(width: 10),
+                  const Icon(Icons.lock, color: Colors.grey),
+                  const SizedBox(width: 10),
                   Text(
                     'Password: $password',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.cake, color: Colors.grey),
-                  SizedBox(width: 10),
+                  const Icon(Icons.cake, color: Colors.grey),
+                  const SizedBox(width: 10),
                   Text(
                     'Age: $age',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.monitor_weight, color: Colors.grey),
-                  SizedBox(width: 10),
+                  const Icon(Icons.monitor_weight, color: Colors.grey),
+                  const SizedBox(width: 10),
                   Text(
                     'Weight: $weaight', // Fix typo from 'weaight' to 'weight'
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 // mainAxisAlignment:
                 //     MainAxisAlignment.center, // Center Row contents
                 children: [
-                  Icon(Icons.height, color: Colors.grey),
-                  SizedBox(width: 10),
+                  const Icon(Icons.height, color: Colors.grey),
+                  const SizedBox(width: 10),
                   Text(
                     'Hight: $weaight', // Fix typo from 'weaight' to 'weight'
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 24,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Add logout functionality or navigate to another page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const signin_mobilState()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD5FF5F),
+                      backgroundColor: const Color(0xffD5FF5F),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Log Out',
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   ElevatedButton(
@@ -207,14 +214,14 @@ class _AccountPageState extends State<AccountPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Edit()), // Replace with your target page
+                                const Edit()), // Replace with your target page
                       );
                       // Add logout functionality or navigate to another page
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD5FF5F),
+                      backgroundColor: const Color(0xffD5FF5F),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Edit Profile',
                       style: TextStyle(color: Colors.black),
                     ),

@@ -19,7 +19,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController ageController = TextEditingController();
   bool visible = false;
   Future<void> submitData() async {
-    final url =
+    const url =
         'http://192.168.1.11:3000/users'; // Replace with your actual backend URL
     final response = await http.post(
       Uri.parse(url),
@@ -89,8 +89,8 @@ class _SignUpState extends State<SignUp> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Colors.black26,
                     blurRadius: 10,
                     offset: Offset(0, 2),

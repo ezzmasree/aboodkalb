@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class LinkDevicePage extends StatelessWidget {
+  const LinkDevicePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +55,11 @@ class LinkDevicePage extends StatelessWidget {
               onPressed: () {
                 // Add your logic to link the device here
               },
-              child: Text('Link Device ',
-                  style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0))),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xffD5FF5F), // Button color
               ),
+              child: Text('Link Device ',
+                  style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0))),
             ),
           ],
         ),

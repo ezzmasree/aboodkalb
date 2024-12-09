@@ -1,14 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wibsite/firebase_options.dart';
-import 'package:wibsite/home_page/ai_chat/interface.dart';
 
-import 'package:wibsite/home_page/home.dart';
 import 'package:wibsite/sign_inmoblie/auth_gate.dart';
 
-import 'package:wibsite/sign_inmoblie/signin_moblie.dart';
 
-import 'package:wibsite/sign_up_moblie/sign_upmoblie.dart';
 //import 'package:wibsite/db/mongo.dart';
 import 'package:provider/provider.dart';
 
