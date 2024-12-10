@@ -1,60 +1,126 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wibsite/saving_data/save_data.dart';
 import 'package:wibsite/sign_up_moblie/textfield_signup.dart';
 import 'package:http/http.dart' as http;
 
-class Edit extends StatelessWidget {
+class Edit extends StatefulWidget {
   const Edit({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController hintPasswordController =
-        TextEditingController();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController ageController = TextEditingController();
-    final TextEditingController weightController = TextEditingController();
-    void updateProfile() async {
-      // Collect the data from the controllers
-      String email = emailController.text;
-      String password = passwordController.text;
-      String hintPassword = hintPasswordController.text;
-      String name = nameController.text;
-      String age = ageController.text;
-      String weight = weightController.text;
+  _EditState createState() => _EditState();
+}
 
-      // Prepare the body for the request
-      final Map<String, String> updatedData = {
-        'password': password,
-        'name': name,
-        'age': age,
-        'weight': weight,
-      };
+class _EditState extends State<Edit> {
+  String? savedString;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController hintPasswordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  void initState() {
+    super.initState();
+    loadString();
+    // print("hello $savedString "); // Load the saved string when the page loads
+  }
 
-      // Send the request (you can use your preferred HTTP client here)
-      try {
-        final response = await http.put(
-          Uri.parse('http://192.168.1.100:3000/profile/$email'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode(updatedData),
-        );
+  Future<void> loadString() async {
+    String? data = await getString(); // Get the string from SharedPreferences
+    setState(() {
+      savedString = data;
+      // Update the UI with the retrieved data
+    });
+  }
 
-        if (response.statusCode == 200) {
-          // Handle success
-          print('Profile updated successfully');
-        } else {
-          // Handle error
-          print('Error updating profile');
-        }
-      } catch (error) {
-        print('Error: $error');
-      }
+  void updateProfile() async {
+    // Collect the data from the controllers
+    String email = emailController.text;
+    String password = passwordController.text;
+    String hintPassword = hintPasswordController.text;
+    String name = nameController.text;
+    String age = ageController.text;
+    String weight = weightController.text;
+
+    // Validate if all fields are filled
+    if (password.isEmpty ||
+        hintPassword.isEmpty ||
+        name.isEmpty ||
+        age.isEmpty ||
+        weight.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill in all fields.")),
+      );
+      return;
     }
 
+    // Check if passwords match
+    if (password != hintPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match.")),
+      );
+      return;
+    }
+
+    // Prepare the body for the request
+    final Map<String, String> updatedData = {
+      'password': password,
+      'name': name,
+      'age': age,
+      'weight': weight,
+    };
+
+    try {
+      // Send the HTTP PUT request
+      final response = await http.put(
+        Uri.parse('http://192.168.1.100:3000/profile/$savedString'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(updatedData),
+      );
+
+      if (response.statusCode == 200) {
+        // If the HTTP request is successful, proceed to update Firebase password
+        User? currentUser = FirebaseAuth.instance.currentUser;
+
+        if (currentUser == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("User not logged in.")),
+          );
+          return;
+        }
+
+        // Update the Firebase password
+        await currentUser.updatePassword(password);
+
+        // Show success message and navigate back
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Profile updated successfully.")),
+        );
+        Navigator.pop(context);
+
+        print('Profile updated successfully');
+      } else {
+        // Handle server error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error updating profile: ${response.body}")),
+        );
+        print('Error updating profile: ${response.body}');
+      }
+    } catch (error) {
+      // Handle exceptions
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $error")),
+      );
+      print('Error: $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -136,7 +202,7 @@ class Edit extends StatelessWidget {
                       elevation: 5,
                       fixedSize: const Size(300, 50),
                     ),
-                    onPressed: () {},
+                    onPressed: updateProfile,
                     child: const Text(
                       "Save Changes",
                       style: TextStyle(

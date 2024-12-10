@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wibsite/home_page/workout.dart/vidioplayer.dart';
+import 'package:wibsite/saving_data/save_data.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -16,16 +17,47 @@ class _WorkoutPageState extends State<WorkoutPage> {
   List<Map<String, String>> backVideos = [];
   List<Map<String, String>> legsVideos = [];
   List<Map<String, String>> trysibs = [];
+  String? savedString = "-";
 
   @override
   void initState() {
     super.initState();
+    loadString();
     searchById("chest.email", 'chest');
     searchById("shoulder.email", 'shoulder');
     searchById("bicebs.email", 'hands');
     searchById("back.email", 'back');
     searchById("legs.email", 'legs');
     searchById("trysibs .email", 'trysibs');
+  }
+
+  Future<void> loadString() async {
+    String? data = await getString(); // Get the string from SharedPreferences
+    setState(() {
+      savedString = data;
+      // Update the UI with the retrieved data
+    });
+  }
+
+  Future<void> addVideoToUserList(String userId, String videoId) async {
+    final url = Uri.parse('http://192.168.1.100:3000/pro/$userId/add-video');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'videoId': videoId}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print('Video added successfully: ${data['vedios']}');
+      } else {
+        print('Failed to add video: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   void searchById(String id, String category) async {
@@ -168,25 +200,29 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffD5FF5F),
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Success"),
-                            content: Text("You added the item to your list."),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                      print(video['description']);
+                    onPressed: () async {
+                      if (savedString != null && video['id'] != null) {
+                        await addVideoToUserList(savedString!, video['id']!);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Success"),
+                              content: Text("You added the item to your list."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        print("User ID or Video ID is missing");
+                      }
                     },
                     child: Text(
                       'Add to My List',

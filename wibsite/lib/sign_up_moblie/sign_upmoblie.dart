@@ -40,6 +40,7 @@ class SignUpmoblie extends StatelessWidget {
           'age': int.tryParse(ageController.text) ?? 0,
           'weight': int.tryParse(weightController.text) ?? 0,
           'role': "user",
+          'vedios': [],
         }),
       );
 
@@ -58,11 +59,12 @@ class SignUpmoblie extends StatelessWidget {
       if (passwordController.text == hintPasswordController.text) {
         try {
           await saveString(emailController.text);
-          submitData();
+
           await auth.sighnup_emailpassword(
             emailController.text,
             passwordController.text,
           );
+          submitData();
 
           // Navigate to another page on success
           Navigator.pushReplacement(

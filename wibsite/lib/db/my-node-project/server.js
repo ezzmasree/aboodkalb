@@ -64,6 +64,28 @@ app.put("/profile/:id", async (req, res) => {
     res.status(500).json({ message: error.message }); // Return the error message
   }
 });
+////// delet item vedios
+app.delete("/pro/delete/:userId/:videoId", async (req, res) => {
+  const { userId, videoId } = req.params;
+
+  try {
+    const user = await Product.findOneAndUpdate(
+      { email: userId },
+      { $pull: { vedios: videoId } },
+      { new: true }
+    );
+
+    if (user) {
+      res.status(200).json({ message: "Video deleted successfully.", user });
+    } else {
+      res
+        .status(404)
+        .json({ message: "User not found or video not associated." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error.", error });
+  }
+});
 
 ////// sign up
 app.post("/users", async (req, res) => {
@@ -155,6 +177,33 @@ app.get("/raed", async (req, res) => {
   const data = await response.json();
   //console.log(data);
   res.send(data);
+});
+////// for store add to my list vedios
+app.post("/pro/:id/add-video", async (req, res) => {
+  const userId = req.params.id; // User's email or ID
+  const videoId = req.body.videoId; // Video's ID
+
+  try {
+    // Find the user by email (or change to another unique identifier)
+    const user = await Product.findOne({ email: userId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    // Add the video ID to the vedios array if not already present
+    if (!user.vedios.includes(videoId)) {
+      user.vedios.push(videoId);
+      await user.save();
+    }
+
+    res
+      .status(200)
+      .json({ message: "Video added successfully!", vedios: user.vedios });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error updating vedios", error: err.message });
+  }
 });
 
 /////////////////////

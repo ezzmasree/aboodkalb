@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:wibsite/home_page/account_page/Edit.dart';
+import 'package:wibsite/saving_data/save_data.dart';
+import 'package:wibsite/sign_inmoblie/auth.dart';
 
 class AccountPage extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  final Authservce auth = Authservce();
+  String? savedString;
   String name = "";
   String email = "";
   String password = "";
@@ -19,15 +23,26 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   void initState() {
+    final currentUserEmail = auth.getcurrentuser()!.email;
     super.initState();
-    searchById("ezz2002gmail.com"); // Automatically call searchById
+    loadString();
+    searchById('$currentUserEmail'); // Automatically call searchById
+  }
+
+  Future<void> loadString() async {
+    String? data = await getString(); // Get the string from SharedPreferences
+    setState(() {
+      savedString = data;
+      // Update the UI with the retrieved data
+    });
   }
 
   void searchById(String id) async {
-    final url = Uri.parse('http://192.168.1.9:3000/pro/$id');
+    final url = Uri.parse('http://192.168.1.100:3000/pro/$id');
 
     try {
       final response = await http.get(url);
+      print('the save string $id');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);

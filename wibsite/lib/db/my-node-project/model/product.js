@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
   quantity: Number,
   weight: Number,
   role: String,
+  vedios: Array,
 });
 
 const Product = mongoose.model("Product", productSchema);

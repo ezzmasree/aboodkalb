@@ -2,17 +2,18 @@
 
 import 'package:file_picker/file_picker.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wibsite/chat/display_couch.dart';
 import 'package:wibsite/home_page/account_page/account.dart';
+import 'package:wibsite/home_page/account_page/user_vedios.dart';
 import 'package:wibsite/home_page/ai_chat/interface.dart';
 import 'package:wibsite/home_page/food_page/meals.dart';
 import 'package:wibsite/home_page/myHome.dart';
 import 'package:wibsite/home_page/setting_page/setting.dart';
 import 'package:wibsite/home_page/workout.dart/workouticon.dart';
 import 'package:wibsite/saving_data/save_data.dart';
+import 'package:wibsite/sign_inmoblie/auth.dart';
 import 'package:wibsite/sign_inmoblie/signin_moblie.dart';
 
 class Home_Page extends StatelessWidget {
@@ -165,10 +166,13 @@ class _MainPageState extends State<MainPage> {
             ),
             Divider(color: Colors.grey.shade600, thickness: 1),
             _createDrawerItem(
-              icon: Icons.description_outlined,
-              text: 'Terms and Conditions',
+              icon: Icons.video_collection_sharp,
+              text: 'My Vedios',
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserVedios()),
+                );
               },
             ),
             _createDrawerItem(
@@ -193,6 +197,8 @@ class _MainPageState extends State<MainPage> {
                   .redAccent, // Red color for log out to make it stand out
               onTap: () {
                 // Log out action here
+                final Aut = Authservce();
+                Aut.signout();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => signin_mobilState()),
@@ -286,8 +292,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
 
 class ServicePage extends StatelessWidget {
   const ServicePage({super.key});

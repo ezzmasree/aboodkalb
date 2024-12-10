@@ -20,6 +20,11 @@ class Authservce {
     }
   }
 
+  //// sign out
+  Future<void> signout() async {
+    return await auth.signOut();
+  }
+
   ///// sign uu
   ///
   Future<UserCredential> sighnup_emailpassword(String email, password) async {
