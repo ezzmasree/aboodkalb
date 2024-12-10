@@ -52,9 +52,13 @@ class Chatpage extends StatelessWidget {
 
   Widget buldmassegelist() {
     String senedrid = authSer.getcurrentuser()!.uid;
+    print(senedrid);
+    print(riciveid);
+
     return StreamBuilder(
       stream: chatServ.getmessages(riciveid, senedrid),
       builder: (context, snapshot) {
+        print(snapshot.data!.docs.isEmpty);
         if (snapshot.hasError) {
           return const Center(
               child: Text("An error occurred.",

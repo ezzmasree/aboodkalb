@@ -388,31 +388,6 @@ class FoodTrackerCard extends StatelessWidget {
   }
 }
 
-// class MealTips extends StatelessWidget {
-//   const MealTips({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         MealTip(
-//           imagePath: "assets/meals/grilled_chicken.jpg",
-//           title: 'Grilled Chicken Wrap',
-//           time: '25 min',
-//           calories: '350 Cal',
-//         ),
-//         MealTip(
-//           imagePath: "assets/meals/quinoa_salad.jpg",
-//           title: "Quinoa Salad with Avocado",
-//           time: '20 min',
-//           calories: '400 Cal',
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class MealTips extends StatelessWidget {
   const MealTips({super.key});
 

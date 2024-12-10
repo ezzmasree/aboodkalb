@@ -31,7 +31,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   void searchById(String id, String category) async {
-    final url = Uri.parse('http://192.168.1.100:3000/pro/$id');
+    final url = Uri.parse('http://192.168.1.112:3000/pro/$id');
 
     try {
       final response = await http.get(url);
