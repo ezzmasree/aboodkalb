@@ -108,7 +108,7 @@ app.post("/chat", async (req, res) => {
   const requestBody = {
     model: "command-light",
     prompt,
-    max_tokens: 200,
+    max_tokens: 400,
   };
 
   try {

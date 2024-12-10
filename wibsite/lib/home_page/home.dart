@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, dead_code
 
-import 'package:file_picker/file_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wibsite/chat/display_couch.dart';
@@ -28,20 +26,21 @@ class Home_Page extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-
+  final int initialIndex;
+  const MainPage({super.key, this.initialIndex = 0});
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-
+  //int _currentIndex = 0;
+  late int _currentIndex;
   String? savedString;
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialIndex; // Use the passed initialIndex
     loadString();
     print("hello $savedString "); // Load the saved string when the page loads
   }
@@ -54,8 +53,9 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    Widget _createDrawerItem(
+    Widget createDrawerItem(
         {required IconData icon,
         required String text,
         required VoidCallback onTap,
@@ -122,21 +122,24 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.home_outlined,
               text: 'Home',
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                );
               },
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.account_circle_outlined,
               text: 'Account',
               onTap: () {
                 Navigator.pop(context);
               },
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.settings_outlined,
               text: 'Settings',
               onTap: () {
@@ -144,7 +147,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             Divider(color: Colors.grey.shade600, thickness: 1),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.chat_bubble,
               text: 'Chat Bot',
               onTap: () {
@@ -154,7 +157,7 @@ class _MainPageState extends State<MainPage> {
                 );
               },
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.chat_bubble,
               text: 'Chat massenger',
               onTap: () {
@@ -165,7 +168,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             Divider(color: Colors.grey.shade600, thickness: 1),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.video_collection_sharp,
               text: 'My Vedios',
               onTap: () {
@@ -175,14 +178,14 @@ class _MainPageState extends State<MainPage> {
                 );
               },
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.feedback_outlined,
               text: 'Give Us Feedback',
               onTap: () {
                 Navigator.pop(context);
               },
             ),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.support_agent_outlined,
               text: 'Support',
               onTap: () {
@@ -190,7 +193,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             Divider(color: Colors.grey.shade600, thickness: 1),
-            _createDrawerItem(
+            createDrawerItem(
               icon: Icons.logout,
               text: 'Log Out',
               color: Colors
@@ -220,14 +223,14 @@ class _MainPageState extends State<MainPage> {
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
-                if (_currentIndex == 4) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            Setting()), // Replace with your target page
-                  );
-                } // Update the selected index
+                // if (_currentIndex == 4) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) =>
+                //             Setting()), // Replace with your target page
+                //   );
+                // } // Update the selected index
               });
             },
             selectedItemColor: Color(0xffD5FF5F),
@@ -275,7 +278,7 @@ class _MainPageState extends State<MainPage> {
     } else if (_currentIndex == 3) {
       return AccountPage();
     } else if (_currentIndex == 4) {
-      return ServicePage();
+      return Setting();
     } else {
       return Center(child: Text('Select a page'));
     }

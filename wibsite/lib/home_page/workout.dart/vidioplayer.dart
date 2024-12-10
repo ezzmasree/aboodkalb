@@ -6,7 +6,7 @@ class VideoPlayerPage extends StatelessWidget {
   final String description;
   final String title;
 
-  VideoPlayerPage({
+  const VideoPlayerPage({super.key, 
     required this.videoId,
     required this.description,
     required this.title,
@@ -14,9 +14,9 @@ class VideoPlayerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final YoutubePlayerController _controller = YoutubePlayerController(
+    final YoutubePlayerController controller = YoutubePlayerController(
       initialVideoId: videoId,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
       ),
@@ -45,7 +45,7 @@ class VideoPlayerPage extends StatelessWidget {
             children: [
               // Video Player
               YoutubePlayer(
-                controller: _controller,
+                controller: controller,
                 showVideoProgressIndicator: true,
                 progressIndicatorColor: Colors.amber,
               ),
@@ -64,9 +64,9 @@ class VideoPlayerPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               // Description Label
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
                   'Description',
                   style: TextStyle(
                     fontSize: 20,

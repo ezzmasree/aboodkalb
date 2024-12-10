@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:wibsite/home_page/workout.dart/fitnessTap.dart';
 import 'package:wibsite/home_page/workout.dart/trainng.dart';
 import 'package:wibsite/home_page/workout.dart/workoutpage.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 // Define the Workout model
 class Workout {
@@ -32,6 +31,8 @@ class WorkoutVideo {
 }
 
 class workout extends StatelessWidget {
+  const workout({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,12 +40,14 @@ class workout extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: home(),
+      home: const home(),
     );
   }
 }
 
 class home extends StatelessWidget {
+  const home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -55,16 +58,16 @@ class home extends StatelessWidget {
           // ignore: prefer_const_constructors
           title: TabBar(
             tabs: [
-              Tab(
+              const Tab(
                 text: 'Workout-in',
                 icon: Icon(
                     Icons.fitness_center), // Optional: Add an icon if needed
               ),
-              Tab(
+              const Tab(
                 text: 'Workout-out',
                 icon: Icon(Icons.directions_run), // Optional: Add an icon
               ),
-              Tab(
+              const Tab(
                 text: 'Training',
                 icon: Icon(Icons.accessibility_new), // Optional: Add an icon
               ),
@@ -79,14 +82,14 @@ class home extends StatelessWidget {
               fontWeight: FontWeight.bold, // Make the text bold
               fontSize: 16, // Font size of the active tab
             ),
-            unselectedLabelStyle: TextStyle(
+            unselectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.normal, // Normal text for inactive tabs
             ),
             indicatorPadding:
-                EdgeInsets.symmetric(horizontal: 16.0), // Indicator padding
+                const EdgeInsets.symmetric(horizontal: 16.0), // Indicator padding
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             WorkoutPage(),
             FitnessTab(),

@@ -228,12 +228,12 @@ class MealPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Color(0xFF1a1a1e), // Dark background
           title: const Text(
-            'Browse',
+            'Meals',
             style: TextStyle(color: Colors.white),
           ),
           bottom: const TabBar(
             indicatorColor:
-                Color(0xFFc4ff00), // Highlight color for selected tab
+                Color(0xFFd5ff5f), // Highlight color for selected tab
             labelColor: Colors.white,
             unselectedLabelColor: Colors.grey,
             tabs: [
@@ -461,7 +461,7 @@ class MealDetailsPage extends StatelessWidget {
         backgroundColor: const Color(0xFF1a1a1e),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,
-              color: Color(0xFFFFD700)), // Yellow back arrow
+              color: Color(0xFFd5ff5f)), //  back arrow
           onPressed: () {
             Navigator.pop(context);
           },
@@ -519,7 +519,7 @@ class MealDetailsPage extends StatelessWidget {
                   const Text(
                     "About",
                     style: TextStyle(
-                      color: Color(0xFFFFD700), // Highlighted section title
+                      color: Color(0xFFd5ff5f), // Highlighted section title
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -542,7 +542,7 @@ class MealDetailsPage extends StatelessWidget {
                   const Text(
                     "Ingredients",
                     style: TextStyle(
-                      color: Color(0xFFFFD700),
+                      color: Color(0xFFd5ff5f),
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -565,7 +565,7 @@ class MealDetailsPage extends StatelessWidget {
                   const Text(
                     "Instructions",
                     style: TextStyle(
-                      color: Color(0xFFFFD700),
+                      color: Color(0xFFd5ff5f),
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

@@ -17,6 +17,7 @@ class __signin_mobilStateState extends State<signin_mobilState> {
   @override
   String? savedString;
 
+  @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
@@ -46,8 +47,8 @@ class __signin_mobilStateState extends State<signin_mobilState> {
               decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Colors.black26,
                     blurRadius: 10,
                     offset: Offset(0, 2),
@@ -103,13 +104,13 @@ class __signin_mobilStateState extends State<signin_mobilState> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    Home_Page(), // Replace with your target page
+                                    const Home_Page(), // Replace with your target page
                               ),
                             );
                           } catch (e) {
                             showDialog(
                                 context: context,
-                                builder: (context) => AlertDialog(
+                                builder: (context) => const AlertDialog(
                                     title: Text("invalid email or password")));
                           }
                           // Navigator.push(
@@ -132,12 +133,12 @@ class __signin_mobilStateState extends State<signin_mobilState> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpmoblie()),
+                                builder: (context) => const SignUpmoblie()),
                           );
                         },
                         child: const Text(
                           "you dont have account? Sign up",
-                          style: const TextStyle(color: Color(0xffD5FF5F)),
+                          style: TextStyle(color: Color(0xffD5FF5F)),
                         ),
                       ),
                       const Visibility(
@@ -159,6 +160,5 @@ class __signin_mobilStateState extends State<signin_mobilState> {
         ),
       ),
     );
-    ;
   }
 }

@@ -10,50 +10,137 @@ class ChataiWithfood extends StatefulWidget {
 }
 
 class _ChataiWithfood extends State<ChataiWithfood> {
-  List<String> dis = [];
-  List<String> dis_withnumber = [];
-  int count = 1;
-  String resposefromai = "";
+  final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  List<Map<String, String>> messages = [];
+  int currentStep = 0; // Tracks the current question
+  String selectedCategory = "";
+  String caloriesPreference = "";
+  String userIngredients = "";
 
   @override
   void initState() {
     super.initState();
 
+    // Initial welcome message
     messages.add({
       'sender': 'bot',
       'text':
-          'Hello! Tell me your preferences, and I\'ll help you choose the perfect meal.'
+          'Hello! I am your food AI assistant. Let\'s find the perfect meal for you. I have a few questions first!',
     });
-  }
 
-  final TextEditingController _controller = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  List<Map<String, String>> messages = [];
+    _askNextQuestion();
+  }
 
   Future<void> sendMessage(String userMessage) async {
     setState(() {
-      messages.add({
-        'sender': 'user',
-        'text': userMessage,
-      });
+      messages.add({'sender': 'user', 'text': userMessage});
     });
 
     _scrollToBottom();
 
+    //   switch (currentStep) {
+    //     case 0:
+    //       selectedCategory = userMessage;
+    //       messages.add({'sender': 'bot', 'text': 'okay okay thats good,but before that i need to know,How many calories do you want in your meal?'});
+    //       currentStep++;
+    //       break;
+
+    //     case 1:
+    //       caloriesPreference = userMessage;
+    //       messages.add({'sender': 'bot', 'text': 'hmmmm okay then ,What ingredients do you have in your kitchen?'});
+    //       currentStep++;
+    //       break;
+
+    //     case 2:
+    //       userIngredients = userMessage;
+
+    //       await _fetchMealRecommendations();
+    //       currentStep++;
+    //       break;
+
+    //     default:
+    //       messages.add({'sender': 'bot', 'text': 'Let me know if you need more recommendations!'});
+    //   }
+
+    //   _scrollToBottom();
+    // }
+
+    switch (currentStep) {
+      case 0:
+        selectedCategory = userMessage;
+        messages.add({
+          'sender': 'bot',
+          'text':
+              'okay okay thats good,but before that i need to know,How many calories do you want in your meal?'
+        });
+        currentStep++;
+        break;
+
+      case 1:
+        caloriesPreference = userMessage;
+        messages.add({
+          'sender': 'bot',
+          'text':
+              'hmmmm okay then ,What ingredients do you have in your kitchen?'
+        });
+        currentStep++;
+        break;
+
+      case 2:
+        userIngredients = userMessage;
+
+        // Show a waiting message
+        setState(() {
+          messages.add({
+            'sender': 'bot',
+            'text':
+                'Got it! Let me find the perfect meal for you. Please wait a moment...'
+          });
+        });
+
+        _scrollToBottom();
+
+        // Fetch meal recommendations after a short delay
+        await Future.delayed(const Duration(seconds: 2));
+        await _fetchMealRecommendations();
+        currentStep++;
+        break;
+
+      default:
+        messages.add({
+          'sender': 'bot',
+          'text': 'Let me know if you need more recommendations!'
+        });
+    }
+
+    _scrollToBottom();
+  }
+
+  Future<void> _fetchMealRecommendations() async {
     final url = Uri.parse(
         'http://192.168.1.100:3000/chat'); // Replace with your backend IP
+
+    final requestPayload = {
+      'prompt': '''
+        Find a meal based on these preferences:
+        Category: $selectedCategory,
+        Calories: $caloriesPreference,
+        Ingredients: $userIngredients.
+        Provide the meal title, calories, description, ingredients, and instructions.
+      '''
+    };
 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'prompt': '  ${userMessage}. '}),
+      body: jsonEncode(requestPayload),
     );
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       setState(() {
-        resposefromai = responseData['text'];
-        messages.add({'sender': 'bot', 'text': resposefromai});
+        messages.add({'sender': 'bot', 'text': responseData['text']});
       });
     } else {
       setState(() {
@@ -63,7 +150,16 @@ class _ChataiWithfood extends State<ChataiWithfood> {
         });
       });
     }
+  }
 
+  void _askNextQuestion() {
+    if (currentStep == 0) {
+      messages.add({
+        'sender': 'bot',
+        'text':
+            'What meal would you like? Choose from breakfast, brunch, lunch, or snacks.',
+      });
+    }
     _scrollToBottom();
   }
 
@@ -83,12 +179,12 @@ class _ChataiWithfood extends State<ChataiWithfood> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Food Bot',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.red,
         elevation: 0,
       ),
       body: Container(
@@ -114,8 +210,8 @@ class _ChataiWithfood extends State<ChataiWithfood> {
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: isUser
-                            ? Colors.deepOrange.withOpacity(0.8)
-                            : const Color.fromARGB(255, 3, 118, 9)
+                            ? Colors.red.withOpacity(0.8)
+                            : const Color.fromARGB(255, 0, 0, 0)
                                 .withOpacity(0.8),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
@@ -136,7 +232,7 @@ class _ChataiWithfood extends State<ChataiWithfood> {
                       ),
                       child: Text(
                         message['text'] ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -160,7 +256,7 @@ class _ChataiWithfood extends State<ChataiWithfood> {
                       ),
                       decoration: InputDecoration(
                         hintText: 'Type your message...',
-                        hintStyle: TextStyle(color: Colors.white54),
+                        hintStyle: const TextStyle(color: Colors.white54),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 10,
                           horizontal: 15,
@@ -172,7 +268,7 @@ class _ChataiWithfood extends State<ChataiWithfood> {
                           borderSide: BorderSide.none,
                         ),
                         suffixIcon: IconButton(
-                          icon: Icon(Icons.clear, color: Colors.deepOrange),
+                          icon: const Icon(Icons.clear, color: Colors.red),
                           onPressed: () => _controller.clear(),
                         ),
                       ),
@@ -188,8 +284,8 @@ class _ChataiWithfood extends State<ChataiWithfood> {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.deepOrange,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(

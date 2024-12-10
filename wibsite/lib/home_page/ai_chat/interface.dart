@@ -112,7 +112,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'prompt':
-            ' I am working a ${userMessage}, chose  from this menu one option to excrcice it  . Please answer only the number of the option from this menu: 1-chest. 2-leg. 3-shoulder. 4-biceps. 5-back. 6-triceps. '
+            ' I am working a $userMessage, chose  from this menu one option to excrcice it  . Please answer only the number of the option from this menu: 1-chest. 2-leg. 3-shoulder. 4-biceps. 5-back. 6-triceps. '
       }),
     );
 
@@ -125,19 +125,19 @@ class _ChatBotPageState extends State<ChatBotPage> {
         print(resposefromai);
         if (resposefromai.contains('1')) {
           // String description = chestVideos['description'];
-          a = "Nice jop to be a ${userMessage} .\n I suggest to you to trainnig chest \n ${chestVideos[0]['description']} \n u can vist our page called workout_in in chest menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\n I suggest to you to trainnig chest \n ${chestVideos[0]['description']} \n u can vist our page called workout_in in chest menu then chose vedio as u like ";
         } else if (resposefromai.contains('2')) {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig legs \n${legsVideos[0]['description']} \n u can vist our page called workout_in in legs menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig legs \n${legsVideos[0]['description']} \n u can vist our page called workout_in in legs menu then chose vedio as u like ";
         } else if (resposefromai.contains('3')) {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig shoulder \n${shoulderVideos[0]['description']} \nu can vist our page called workout_in in shoulder menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig shoulder \n${shoulderVideos[0]['description']} \nu can vist our page called workout_in in shoulder menu then chose vedio as u like ";
         } else if (resposefromai.contains('4')) {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig bisibs \n${handsVideos[0]['description']} \nu can vist our page called workout_in in bisibs menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig bisibs \n${handsVideos[0]['description']} \nu can vist our page called workout_in in bisibs menu then chose vedio as u like ";
         } else if (resposefromai.contains('5')) {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig back \n${backVideos[0]['description']}\n u can vist our page called workout_in in back menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig back \n${backVideos[0]['description']}\n u can vist our page called workout_in in back menu then chose vedio as u like ";
         } else if (resposefromai.contains('6')) {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig trysibs \n${trysibs[0]['description']} \nu can vist our page called workout_in in trysibs menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig trysibs \n${trysibs[0]['description']} \nu can vist our page called workout_in in trysibs menu then chose vedio as u like ";
         } else {
-          a = "Nice jop to be a ${userMessage} .\nI suggest to you to trainnig chest. \n${chestVideos[0]['description']}\n u can vist our page called workout_in in chest menu then chose vedio as u like ";
+          a = "Nice jop to be a $userMessage .\nI suggest to you to trainnig chest. \n${chestVideos[0]['description']}\n u can vist our page called workout_in in chest menu then chose vedio as u like ";
         }
         //  messages.add({'sender': 'bot', 'text': responseData['text']});
         messages.add({'sender': 'bot', 'text': a});
@@ -172,7 +172,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Chat Bot',
           style: TextStyle(color: Colors.white),
         ),
@@ -204,17 +204,17 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       decoration: BoxDecoration(
                         color: isUser ? Colors.grey[850] : Colors.grey[700],
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
+                          topLeft: const Radius.circular(16),
+                          topRight: const Radius.circular(16),
                           bottomLeft:
-                              isUser ? Radius.circular(16) : Radius.zero,
+                              isUser ? const Radius.circular(16) : Radius.zero,
                           bottomRight:
-                              isUser ? Radius.zero : Radius.circular(16),
+                              isUser ? Radius.zero : const Radius.circular(16),
                         ),
                       ),
                       child: Text(
                         message['text'] ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xffD5FF5F),
                           fontWeight: FontWeight.w500,
                           fontSize: 15,
@@ -234,13 +234,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color(0xffD5FF5F),
                     ),
                     decoration: InputDecoration(
                       hintText: 'Type your message...',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 10,
                         horizontal: 15,
@@ -252,13 +252,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
                         borderSide: BorderSide.none,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.clear, color: Color(0xffD5FF5F)),
+                        icon: const Icon(Icons.clear, color: Color(0xffD5FF5F)),
                         onPressed: () => _controller.clear(),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 GestureDetector(
                   onTap: () {
                     print(dis_withnumber);
@@ -269,11 +269,11 @@ class _ChatBotPageState extends State<ChatBotPage> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xffD5FF5F),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.send,
                       color: Colors.black,
                     ),

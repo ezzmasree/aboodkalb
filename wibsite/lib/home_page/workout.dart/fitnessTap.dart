@@ -6,6 +6,8 @@ import 'package:wibsite/saving_data/save_data.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class FitnessTab extends StatefulWidget {
+  const FitnessTab({super.key});
+
   @override
   _WorkoutPageState createState() => _WorkoutPageState();
 }
@@ -59,7 +61,7 @@ class _WorkoutPageState extends State<FitnessTab> {
   }
 
   void searchById(String id, String category) async {
-    final url = Uri.parse('http://192.168.1.100:3000/pro/$id');
+    final url = Uri.parse('http://192.168.1.112:3000/pro/$id');
 
     try {
       final response = await http.get(url);
@@ -103,9 +105,9 @@ class _WorkoutPageState extends State<FitnessTab> {
   Widget buildVideoGrid(List<Map<String, String>> videos) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.all(8),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(8),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
@@ -136,7 +138,7 @@ class _WorkoutPageState extends State<FitnessTab> {
                     YoutubePlayer(
                       controller: YoutubePlayerController(
                         initialVideoId: video['id']!,
-                        flags: YoutubePlayerFlags(
+                        flags: const YoutubePlayerFlags(
                           autoPlay: false,
                           mute: false,
                         ),
@@ -150,7 +152,7 @@ class _WorkoutPageState extends State<FitnessTab> {
                         children: [
                           Text(
                             video['title']!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -165,7 +167,7 @@ class _WorkoutPageState extends State<FitnessTab> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffD5FF5F),
+                  backgroundColor: const Color(0xffD5FF5F),
                 ),
                 onPressed: () async {
                   if (savedString != null && video['id'] != null) {
@@ -191,10 +193,10 @@ class _WorkoutPageState extends State<FitnessTab> {
                     print("User ID or Video ID is missing");
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Add to My List',
                   style: TextStyle(
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
               ),
@@ -208,7 +210,7 @@ class _WorkoutPageState extends State<FitnessTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 5, 6, 12),
+      backgroundColor: const Color.fromARGB(255, 5, 6, 12),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
